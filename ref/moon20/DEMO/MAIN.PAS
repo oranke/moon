@@ -27,7 +27,7 @@ uses
 (*$ifndef ver80 *)
   trayicon,
 (*$endif *)
-  Menus;
+  Menus, XPMenu;
 (*@\\\0000001401*)
 
 type
@@ -93,6 +93,7 @@ type
       mnu_line2: TMenuItem;
       mnu_timezone: TMenuItem;
       mnu_help_item: TMenuItem;
+    XPMenu1: TXPMenu;
     procedure TimerTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure mnu_stopClick(Sender: TObject);
@@ -141,8 +142,6 @@ var
 const
   negative_dates_broken: boolean = false;
   helpfilename = 'moon.hlp';
-  moontool_inifile: string = 'moontool.ini';
-  time_max_width: integer = 150;
   hc_main      = 1000;
   hc_timezones = 1001;
   hc_mainform  = 1002;
@@ -151,6 +150,11 @@ const
   hc_setutc    = 1010;
   hc_setjewish = 1012;
   hc_locations = 1013;
+
+var
+  moontool_inifile: string = 'moontool.ini';
+  time_max_width: integer = 150;
+  
 (*@\\\0000001403*)
 (*@/// implementation *)
 implementation
@@ -167,14 +171,16 @@ const
 function datestring(x:TDateTime):string;
 begin
   x:=FalsifyTDateTime(x);
-  result:=formatdatetime('hh:nn',x)+' UTC '+formatdatetime('d mmmm yyyy',x);
+  //result:=formatdatetime('hh:nn',x)+' UTC '+formatdatetime('d mmmm yyyy',x);
+  result := 'UTC ' + DateTimeToStr(x);
   end;
 (*@\\\0000000306*)
 (*@/// function date2string(x:TDateTime):string; *)
 function date2string(x:TDateTime):string;
 begin
   x:=FalsifyTDateTime(x);
-  result:=formatdatetime('hh:nn:ss d mmmm yyyy',x);
+  //result:=formatdatetime('hh:nn:ss d mmmm yyyy',x);
+  result := DateTimeToStr(x);
   end;
 (*@\\\0000000304*)
 (*@/// function degree2string(x:extended):string; *)
@@ -343,6 +349,7 @@ begin
     hDll32:=LL32('kernel32.dll',dummy,1);            { get the 32bit handle of kernel32 }
     farproc:=GA32(hDll32,'GetTimeZoneInformation');  { get the 32bit adress of the function }
     case CP32(tz_info,farproc,1,1) of                { and call it }
+      0: result:=tz_info.StandardBias+tz_info.Bias;  (* 2020-11-02. This is new! *)
       1: result:=tz_info.StandardBias+tz_info.Bias;
       2: result:=tz_info.DaylightBias+tz_info.Bias;
       else result:=0;
@@ -427,6 +434,7 @@ var
   tz_info: TTimeZoneInformation;
 begin
   case GetTimeZoneInformation(tz_info) of
+    0: result:=tz_info.StandardBias+tz_info.Bias;  (* 2020-11-02. This is new! *)
     1: result:=tz_info.StandardBias+tz_info.Bias;
     2: result:=tz_info.DaylightBias+tz_info.Bias;
     else result:=0;

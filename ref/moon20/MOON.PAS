@@ -2529,6 +2529,9 @@ var
 begin
   pos1:=moon_coordinate(date);
   calc_horizontal(pos1,date,longitude,latitude);
+  // fix
+  elevation:=pos1.elevation;
+  azimuth:=pos1.azimuth;
   end;
 (*@\\\*)
 (*@/// procedure Sun_Position_Horizontal(date:TdateTime; longitude,latitude: extended; var elevation,azimuth: extended); *)
@@ -2538,6 +2541,9 @@ var
 begin
   pos1:=sun_coordinate(date);
   calc_horizontal(pos1,date,longitude,latitude);
+  // fix
+  elevation:=pos1.elevation;
+  azimuth:=pos1.azimuth;
   end;
 (*@\\\*)
 

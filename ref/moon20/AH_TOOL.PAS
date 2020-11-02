@@ -637,7 +637,7 @@ type
     end;
   (*@\\\*)
 
-const
+var
 (*$ifndef delphi_ge_3 *)
   ShowHintProcs: TObjectList =NIL;
 (*$endif *)
@@ -697,7 +697,7 @@ begin
 (*@\\\*)
 (*@\\\0000000301*)
 
-const
+var
   Dummy: TDummyObject        =NIL;
 
 (*@/// Compare two method pointers *)
@@ -783,7 +783,7 @@ begin
 { create an console application without using forms but receiving Windows    }
 { messages.                                                                  }
 
-const
+var
   (*@/// UtilWindowClass: TWndClass = (...); *)
   UtilWindowClass: TWndClass = (
     style: 0;
