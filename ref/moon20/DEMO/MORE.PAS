@@ -183,11 +183,14 @@ begin
   {   noncentral:       typ_mooneclipse.caption:=LoadStr(SEclipseNonCentral); }
     end;
   (*@\\\0000000915*)
-  val_easter.caption:=formatdatetime('d mmmm yyyy',FalsifyTDateTime(Easterdate(y)));
-  val_pesach.caption:=formatdatetime('d mmmm yyyy',FalsifyTDateTime(Pesachdate(y)));
+  //val_easter.caption:=formatdatetime('d mmmm yyyy',FalsifyTDateTime(Easterdate(y)));
+  //val_pesach.caption:=formatdatetime('d mmmm yyyy',FalsifyTDateTime(Pesachdate(y)));
+  val_easter.caption:=DateToStr(FalsifyTDateTime(Easterdate(y)));
+  val_pesach.caption:=DateToStr(FalsifyTDateTime(Pesachdate(y)));
   date:=ChineseNewYear(y);
   chinese:=ChineseDate(date);
-  val_chinese.caption:=formatdatetime('d mmmm yyyy',FalsifyTDateTime(date))+
+  //val_chinese.caption:=formatdatetime('d mmmm yyyy',FalsifyTDateTime(date))+
+  val_chinese.caption:=DateToStr(FalsifyTDateTime(date))+
     ' ('+ChineseZodiac[chinese.yearcycle.zodiac]+')';
 
   (*@/// make rise/set/transit fields empty *)
@@ -323,7 +326,7 @@ begin
 (*@/// procedure Tfrm_more.SetLanguage(Sender: TObject); *)
 procedure Tfrm_more.SetLanguage(Sender: TObject);
 const
-  offset = 10;
+  offset = 25;
 var
   pos_x, pos_x_2, i: integer;
   z: TChineseZodiac;

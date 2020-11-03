@@ -197,6 +197,7 @@ begin
   m:=round((x-s)/60) mod 60;
   d:=round((x-s-m*60)/3600);
   result:=result+inttostr(d)+chr(176)+' ';
+  //result:=result+inttostr(d)+chr(167)+' ';
   result:=result+inttostr(m)+chr(39)+' ';
   result:=result+inttostr(s)+chr(39)+chr(39);
   end;
@@ -750,7 +751,7 @@ begin
 (*@/// procedure TMainForm.SetLanguage(Sender: TObject); *)
 procedure TMainForm.SetLanguage(Sender: TObject);
 const
-  offset = 10;
+  offset = 15;
   moon_size = 80;
   lunation_value_size = 383-336;
 var
